@@ -25,6 +25,8 @@
 # define GRAY 0x888888
 # define DARKGRAY 0x222222
 # define WHITE 0xffffff
+# define WINWIDTH 1920 / 1.5
+# define WINHEIGHT 1080 / 1.5
 # include <math.h>
 # include "mlx.h"
 # include "libft.h"
@@ -40,16 +42,16 @@ typedef struct	s_vec3
 
 typedef struct	s_vec2
 {
-	double x;
-	double y;
+	long double x;
+	long double y;
 }				t_vec2;
 
 typedef struct	s_color
 {
-	int r;
-	int g;
-	int b;
-	int a;
+	double r;
+	double g;
+	double b;
+	double a;
 }				t_color;
 
 typedef struct	s_data
@@ -60,14 +62,31 @@ typedef struct	s_data
 	int		win_height;
 	int		img_posx;
 	int		img_posy;
-	int		scale;
+	long double	scale;
 	int		bits_pix;
+	int		size_line;
 	int		endian;
+	t_vec2	grid_position;
 	void	*background;
 	void	*image;
+	void	*fractal;
+	char	*fractal_buf;
+	char	*grid_buf;
+	int		max_iteration;
+	t_vec2	frac_pos;
 }				t_data;
 
-void			error_manager(char *str);
-
+void		error_manager(char *str);
+t_color		color_init(t_data *data, int hex);
+void		create_background(t_data *data);
+void	set_image_pixel_color(t_data *data, char *img_buf, int pos, t_color col);
+void	draw_vertical_line(t_data *data, char *buffer, int x, t_color col);
+void	draw_horizontal_line(t_data *data, char *buffer, int y, t_color col);
+void	fill_image(t_data *data, int buf_size, char *img_buf, t_color color);
+int		input_manager(int key, t_data *data);
+void	draw_coord_grid(t_data *data, char *buffer);
+void	renderer(t_data *data, int f);
+void	draw_fractal(t_data *data, char *buf);
+t_color	hsv(double hue, double saturation, double value, double alpha);
 
 #endif
