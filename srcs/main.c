@@ -32,7 +32,7 @@
 
 static t_data initialize(t_data *data)
 {
-	
+	data->opt.show_grid = 1;
 	data->mlx_ptr = mlx_init();
 	data->win_width =  WINWIDTH;
 	data->win_height = WINHEIGHT;
@@ -47,6 +47,10 @@ static t_data initialize(t_data *data)
 	if (!(data->mlx_win = mlx_new_window(data->mlx_ptr,
 	data->win_width, data->win_height, "FDF")))
 		error_manager("Error opening window.");
+	data->image = mlx_new_image(data->mlx_ptr, data->win_width, data->win_height);
+	data->fractal = mlx_new_image(data->mlx_ptr, data->win_width, data->win_height);
+	data->grid_buf = mlx_get_data_addr(data->image, &data->bits_pix, &data->size_line, &data->endian);
+	data->fractal_buf = mlx_get_data_addr(data->fractal, &data->bits_pix, &data->size_line, &data->endian);
 	return (*data);
 }
 
@@ -54,23 +58,11 @@ static t_data initialize(t_data *data)
 int				main(void)
 {
 	t_data data;
-	int size_line;
-	t_color col_white;
 
 	data = initialize(&data);
-	col_white = color_init(&data, 0);
 	create_background(&data);
-	data.image = mlx_new_image(data.mlx_ptr, data.win_width, data.win_height);
-	data.fractal = mlx_new_image(data.mlx_ptr, data.win_width, data.win_height);
-	data.grid_buf = mlx_get_data_addr(data.image, &data.bits_pix, &size_line, &data.endian);
-	data.fractal_buf = mlx_get_data_addr(data.fractal, &data.bits_pix, &size_line, &data.endian);
-	col_white.a = 255;
-	fill_image(&data, 4 * data.win_height * data.win_width, data.grid_buf, col_white);
-	fill_image(&data, 4 * data.win_height * data.win_width, data.fractal_buf, col_white);
-	col_white = color_init(&data, WHITE);
 	draw_coord_grid(&data, data.grid_buf);
 	renderer(&data, 1);
-	//mlx_destroy_image(data.mlx_ptr, img);
 	mlx_hook(data.mlx_win, 2, 0, &input_manager, &data);
 	mlx_loop(data.mlx_ptr);
 	return (0);

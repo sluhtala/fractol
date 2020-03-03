@@ -25,11 +25,16 @@
 # define GRAY 0x888888
 # define DARKGRAY 0x222222
 # define WHITE 0xffffff
-# define WINWIDTH 1920 / 1.5
-# define WINHEIGHT 1080 / 1.5
+# define WINWIDTH 1280 / 2
+# define WINHEIGHT 720 / 2
+# define THREADS 10
+//200 = 1 min 9  sec
+//500 = 1 min 7  sec
+//10  = 1 min 17 sec
 # include <math.h>
 # include "mlx.h"
 # include "libft.h"
+# include <pthread.h>
 
 typedef struct	s_vec3
 {
@@ -46,6 +51,11 @@ typedef struct	s_vec2
 	long double y;
 }				t_vec2;
 
+typedef struct	s_options
+{
+	int show_grid;
+}				t_options;
+
 typedef struct	s_color
 {
 	double r;
@@ -56,6 +66,7 @@ typedef struct	s_color
 
 typedef struct	s_data
 {
+	t_options	opt;
 	void	*mlx_ptr;
 	void	*mlx_win;
 	int		win_width;
@@ -73,7 +84,11 @@ typedef struct	s_data
 	char	*fractal_buf;
 	char	*grid_buf;
 	int		max_iteration;
+	int 	x;
+	int		y;
+	int		i;
 	t_vec2	frac_pos;
+	pthread_mutex_t lock;
 }				t_data;
 
 void		error_manager(char *str);
@@ -86,7 +101,7 @@ void	fill_image(t_data *data, int buf_size, char *img_buf, t_color color);
 int		input_manager(int key, t_data *data);
 void	draw_coord_grid(t_data *data, char *buffer);
 void	renderer(t_data *data, int f);
-void	draw_fractal(t_data *data, char *buf);
+void	draw_fractal(t_data *data);
 t_color	hsv(double hue, double saturation, double value, double alpha);
 
 #endif

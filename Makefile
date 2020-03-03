@@ -19,7 +19,7 @@ $(NAME):
 cata:
 	@make -C libft
 	@echo compiling ..
-	@gcc $(SRCS) libft/libft.a -I /usr/X11/include -I includes -g -L /usr/X11/lib -l mlx -framework OpenGL -framework AppKit -o $(NAME)
+	@gcc $(SRCS) libft/libft.a -lpthread -I /usr/X11/include -I includes -g -L /usr/X11/lib -l mlx -framework OpenGL -framework AppKit -o $(NAME)
 	@echo $(NAME) created
 
 clean:
