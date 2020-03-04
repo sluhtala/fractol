@@ -6,7 +6,7 @@
 /*   By: sluhtala <sluhtala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 13:58:45 by sluhtala          #+#    #+#             */
-/*   Updated: 2020/02/27 20:32:02 by sluhtala         ###   ########.fr       */
+/*   Updated: 2020/03/04 14:40:07 by sluhtala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 
 static t_data initialize(t_data *data)
 {
-	data->opt.show_grid = 1;
+	data->opt.grid = 1;
 	data->mlx_ptr = mlx_init();
 	data->win_width =  WINWIDTH;
 	data->win_height = WINHEIGHT;
@@ -64,6 +64,7 @@ int				main(void)
 	draw_coord_grid(&data, data.grid_buf);
 	renderer(&data, 1);
 	mlx_hook(data.mlx_win, 2, 0, &input_manager, &data);
+	mlx_hook(data.mlx_win, 17, 0, &close_program, &data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }

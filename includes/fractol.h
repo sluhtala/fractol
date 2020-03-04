@@ -6,7 +6,7 @@
 /*   By: sluhtala <sluhtala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 13:54:04 by sluhtala          #+#    #+#             */
-/*   Updated: 2020/02/27 18:41:27 by sluhtala         ###   ########.fr       */
+/*   Updated: 2020/03/04 14:40:28 by sluhtala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct	s_vec2
 
 typedef struct	s_options
 {
-	int show_grid;
+	int grid;
 }				t_options;
 
 typedef struct	s_color
@@ -103,5 +103,8 @@ void	draw_coord_grid(t_data *data, char *buffer);
 void	renderer(t_data *data, int f);
 void	draw_fractal(t_data *data);
 t_color	hsv(double hue, double saturation, double value, double alpha);
+void	scale(int key, t_data *data);
+void move_updown(int key, t_data *data, double amount, int f);
+int		close_program(t_data *data);
 
 #endif

@@ -8,6 +8,6 @@ void	renderer(t_data *data, int f)
 	draw_coord_grid(data, data->grid_buf);
 	mlx_put_image_to_window(data->mlx_ptr, data->mlx_win, data->background, 0, 0);
 	mlx_put_image_to_window(data->mlx_ptr, data->mlx_win, data->fractal, 0, 0);
-	if (data->opt.show_grid)
+	if (data->opt.grid)
 		mlx_put_image_to_window(data->mlx_ptr, data->mlx_win, data->image, 0, 0);
 }
