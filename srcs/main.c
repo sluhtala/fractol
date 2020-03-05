@@ -6,7 +6,7 @@
 /*   By: sluhtala <sluhtala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 13:58:45 by sluhtala          #+#    #+#             */
-/*   Updated: 2020/03/04 14:40:07 by sluhtala         ###   ########.fr       */
+/*   Updated: 2020/03/05 19:55:24 by sluhtala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@
 
 static t_data initialize(t_data *data)
 {
+	data->opt.draw_fractal = 1;
 	data->opt.grid = 1;
+	data->opt.bg = 0;
 	data->mlx_ptr = mlx_init();
 	data->win_width =  WINWIDTH;
 	data->win_height = WINHEIGHT;
@@ -45,7 +47,7 @@ static t_data initialize(t_data *data)
 	data->frac_pos.y = data->grid_position.y * 2 / data->win_height - 1;
 	data->max_iteration = 60;
 	if (!(data->mlx_win = mlx_new_window(data->mlx_ptr,
-	data->win_width, data->win_height, "FDF")))
+	data->win_width, data->win_height, "Fractol")))
 		error_manager("Error opening window.");
 	data->image = mlx_new_image(data->mlx_ptr, data->win_width, data->win_height);
 	data->fractal = mlx_new_image(data->mlx_ptr, data->win_width, data->win_height);
@@ -62,7 +64,7 @@ int				main(void)
 	data = initialize(&data);
 	create_background(&data);
 	draw_coord_grid(&data, data.grid_buf);
-	renderer(&data, 1);
+	renderer(&data);
 	mlx_hook(data.mlx_win, 2, 0, &input_manager, &data);
 	mlx_hook(data.mlx_win, 17, 0, &close_program, &data);
 	mlx_loop(data.mlx_ptr);

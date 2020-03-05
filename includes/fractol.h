@@ -6,7 +6,7 @@
 /*   By: sluhtala <sluhtala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 13:54:04 by sluhtala          #+#    #+#             */
-/*   Updated: 2020/03/04 14:40:28 by sluhtala         ###   ########.fr       */
+/*   Updated: 2020/03/05 19:55:06 by sluhtala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@
 # define GRAY 0x888888
 # define DARKGRAY 0x222222
 # define WHITE 0xffffff
-# define WINWIDTH 1280 / 2
-# define WINHEIGHT 720 / 2
-# define THREADS 10
+# define WINWIDTH 1280
+# define WINHEIGHT 720
+# define THREADS 8
 //200 = 1 min 9  sec
 //500 = 1 min 7  sec
 //10  = 1 min 17 sec
@@ -35,15 +35,6 @@
 # include "mlx.h"
 # include "libft.h"
 # include <pthread.h>
-
-typedef struct	s_vec3
-{
-	double	x;
-	double	y;
-	double	z;
-	double	w;
-	int		color;
-}				t_vec3;
 
 typedef struct	s_vec2
 {
@@ -53,7 +44,10 @@ typedef struct	s_vec2
 
 typedef struct	s_options
 {
+	int draw_fractal;
+	int bg;
 	int grid;
+	int frac_num;
 }				t_options;
 
 typedef struct	s_color
@@ -89,6 +83,7 @@ typedef struct	s_data
 	int		i;
 	t_vec2	frac_pos;
 	pthread_mutex_t lock;
+	pthread_t threadid[THREADS];
 }				t_data;
 
 void		error_manager(char *str);
@@ -100,7 +95,7 @@ void	draw_horizontal_line(t_data *data, char *buffer, int y, t_color col);
 void	fill_image(t_data *data, int buf_size, char *img_buf, t_color color);
 int		input_manager(int key, t_data *data);
 void	draw_coord_grid(t_data *data, char *buffer);
-void	renderer(t_data *data, int f);
+void	renderer(t_data *data);
 void	draw_fractal(t_data *data);
 t_color	hsv(double hue, double saturation, double value, double alpha);
 void	scale(int key, t_data *data);

@@ -64,7 +64,8 @@ int		input_manager(int key, t_data *data)
 		{
 			ft_putstr("Hello World\n");
 		}
-		renderer(data, 1);
+		data->opt.draw_fractal = 1;
+		renderer(data);
 	}
 	return (key);
 }

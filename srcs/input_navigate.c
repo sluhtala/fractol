@@ -6,7 +6,7 @@
 /*   By: sluhtala <sluhtala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:32:29 by sluhtala          #+#    #+#             */
-/*   Updated: 2020/03/04 14:33:33 by sluhtala         ###   ########.fr       */
+/*   Updated: 2020/03/05 19:21:54 by sluhtala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ void move_updown(int key, t_data *data, double amount, int f)
 	}
 	if (key == LEFT_KEY || key == RIGHT_KEY)
 		f = move_leftright(key, data, amount);
-	renderer(data, f);
+	data->opt.draw_fractal = f;
+	renderer(data);
 }
 
 void	scale(int key, t_data *data)
