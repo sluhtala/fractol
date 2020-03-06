@@ -6,7 +6,7 @@
 /*   By: sluhtala <sluhtala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 13:54:04 by sluhtala          #+#    #+#             */
-/*   Updated: 2020/03/05 19:55:06 by sluhtala         ###   ########.fr       */
+/*   Updated: 2020/03/06 19:48:01 by sluhtala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@
 # define GRAY 0x888888
 # define DARKGRAY 0x222222
 # define WHITE 0xffffff
-# define WINWIDTH 1280
-# define WINHEIGHT 720
+# define WINWIDTH 1280 / 2
+# define WINHEIGHT 720 / 2
 # define THREADS 8
+# define ZOOM 0.2f
 //200 = 1 min 9  sec
 //500 = 1 min 7  sec
 //10  = 1 min 17 sec
@@ -41,6 +42,12 @@ typedef struct	s_vec2
 	long double x;
 	long double y;
 }				t_vec2;
+
+typedef struct	s_mouse
+{
+	long double pos_x;
+	long double pos_y;
+}				t_mouse;
 
 typedef struct	s_options
 {
@@ -81,6 +88,7 @@ typedef struct	s_data
 	int 	x;
 	int		y;
 	int		i;
+	t_mouse	mouse;
 	t_vec2	frac_pos;
 	pthread_mutex_t lock;
 	pthread_t threadid[THREADS];
@@ -101,5 +109,8 @@ t_color	hsv(double hue, double saturation, double value, double alpha);
 void	scale(int key, t_data *data);
 void move_updown(int key, t_data *data, double amount, int f);
 int		close_program(t_data *data);
+int		mouse_manager_move(int x, int y, t_data *data);
+int		mouse_manager_press(int button, t_data *data);
+int		mouse_manager(int button, int x, int y,  t_data *data);
 
 #endif

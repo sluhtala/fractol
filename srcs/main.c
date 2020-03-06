@@ -6,7 +6,7 @@
 /*   By: sluhtala <sluhtala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 13:58:45 by sluhtala          #+#    #+#             */
-/*   Updated: 2020/03/05 19:55:24 by sluhtala         ###   ########.fr       */
+/*   Updated: 2020/03/06 16:49:37 by sluhtala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static t_data initialize(t_data *data)
 	return (*data);
 }
 
-
 int				main(void)
 {
 	t_data data;
@@ -67,6 +66,9 @@ int				main(void)
 	renderer(&data);
 	mlx_hook(data.mlx_win, 2, 0, &input_manager, &data);
 	mlx_hook(data.mlx_win, 17, 0, &close_program, &data);
+//	mlx_hook(data.mlx_win, 6, 0, &mouse_manager_move, &data);
+//	mlx_hook(data.mlx_win, 4, 0, &mouse_manager_press, &data);
+	mlx_mouse_hook(data.mlx_win, &mouse_manager, &data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }

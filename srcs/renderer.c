@@ -2,7 +2,6 @@
 
 void	renderer(t_data *data)
 {
-	mlx_put_image_to_window(data->mlx_ptr, data->mlx_win, data->fractal, 0, 0);
 	if (data->opt.draw_fractal)
 	{	
 		draw_fractal(data);	

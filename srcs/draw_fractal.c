@@ -6,7 +6,7 @@
 /*   By: sluhtala <sluhtala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 14:14:19 by sluhtala          #+#    #+#             */
-/*   Updated: 2020/03/05 19:53:14 by sluhtala         ###   ########.fr       */
+/*   Updated: 2020/03/06 17:47:13 by sluhtala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static t_color set_frac_color(t_data *data, t_color col, double angle,
 {
 	int iter;
 	double d;
-	
+
 	iter = data->max_iteration;
 	col = hsv(360 * i / data->max_iteration, 0.7,  1, i * i / iter * iter);;
 	if (ab.x < 2.0 && ab.y <= 2.0)
@@ -134,6 +134,8 @@ void	draw_fractal(t_data *data)
 	}
 	i = 0;
 	while (i++ < THREADS)
+	{
 		pthread_join(data->threadid[i - 1], NULL);
+	}
 	pthread_mutex_destroy(&data->lock);
 }

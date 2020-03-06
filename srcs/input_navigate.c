@@ -6,7 +6,7 @@
 /*   By: sluhtala <sluhtala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:32:29 by sluhtala          #+#    #+#             */
-/*   Updated: 2020/03/05 19:21:54 by sluhtala         ###   ########.fr       */
+/*   Updated: 2020/03/06 19:43:03 by sluhtala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,47 @@ void move_updown(int key, t_data *data, double amount, int f)
 	renderer(data);
 }
 
+static void		mouse_scale(int key, t_data *data)
+{
+	long double tempx;
+	long double tempy;
+
+	tempx = (data->mouse.pos_x * 4 / data->win_width - 2) /
+		data->scale;
+	tempy = (data->mouse.pos_y * 2 / data->win_height - 1) /
+		data->scale;
+	if (key == 4)
+		data->scale *= (1 - ZOOM);
+	if (key == 5)
+		data->scale *= (1 + ZOOM);
+	data->frac_pos.x += tempx - (data->mouse.pos_x * 4 /
+		data->win_width - 2) / data->scale;
+	data->frac_pos.y += tempy - (data->mouse.pos_y * 2 /
+		data->win_height - 1) / data->scale;
+}
+
 void	scale(int key, t_data *data)
 {
-	
-		data->frac_pos.x += (data->grid_position.x * 4 / data->win_width - 2) / data->scale ;
-		data->frac_pos.y += (data->grid_position.y * 2 / data->win_height - 1) / data->scale;
-		data->grid_position.x = data->win_width / 2;
-		data->grid_position.y = data->win_height / 2;
-		if (key == 18 && data->scale > 0.6)
-		{
-			data->scale *= 0.8;
-		}
-		if (key == 19)
-		{
-			data->scale *= 1.2;
-		}
+	long double tempx;
+	long double tempy;
+
+	if (key == 4 || key == 5)
+	{
+		mouse_scale(key, data);
+		return ;	
+	}
+	data->frac_pos.x += (data->grid_position.x * 4 /
+		data->win_width - 2) / data->scale;
+	data->frac_pos.y += (data->grid_position.y * 2 /
+		data->win_height - 1) / data->scale;
+	data->grid_position.x = data->win_width / 2;
+	data->grid_position.y = data->win_height / 2;
+	if (key == 18 && data->scale > ZOOM * 3)
+	{
+		data->scale *= (1 - ZOOM);
+	}
+	if (key == 19)
+	{
+		data->scale *= (1 + ZOOM);
+	}
 }

@@ -42,6 +42,19 @@ static void	input_action_manager(int key, t_data *data)
 	}
 }
 
+int		mouse_manager(int button, int x, int y,  t_data *data)
+{
+	data->mouse.pos_x = x;
+	data->mouse.pos_y = y;	
+	if (button == 4 || button == 5)
+	{
+		ft_putnbr(button);
+		scale(button, data);
+		renderer(data);
+	}
+	return (0);
+}
+
 int		input_manager(int key, t_data *data)
 {
 	if (key == ESC_KEY || key == 12)
@@ -53,7 +66,9 @@ int		input_manager(int key, t_data *data)
 			|| key == 43 || key == 47 || key == SPACE_KEY)
 	{
 		if (key == 18 || key == 19)
+		{
 			scale(key, data);
+		}
 		if (key == 43 && data->max_iteration - 20 > 0)
 			data->max_iteration -= 20;
 		if (key == 47)
