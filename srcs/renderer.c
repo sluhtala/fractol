@@ -11,6 +11,7 @@ static void	select_screen(t_data *data)
 	data->frac_pos.x = 0;
 	data->frac_pos.y = 0;
 	data->scale = 1;
+	data->max_iteration = 60;
 	while (xpos < data->win_width - 1)
 	{
 		data->frac_pos.x = (xpos) * 4 / data->win_width;
