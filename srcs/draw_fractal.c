@@ -14,56 +14,62 @@
 #include <pthread.h>
 #include <stdio.h>
 
-static t_vec2 inverse_transform(t_vec2 xy, t_data *data, double x, double y)
+t_vec2 inverse_transform(t_vec2 xy, t_data *data, double x, double y)
 {
-	xy.x = (long double)x * 4 / (long double)data->win_width  - 2;
+	xy.x = (long double)x * 4 / (long double)data->win_width - 2;
 	xy.y = (long double)y * 2 / (long double)data->win_height - 1;
 	xy.x /= data->scale; 
 	xy.y /= data->scale;
 	return (xy);
 }
 
-static t_color set_frac_color(t_data *data, t_color col, double angle,
+t_color set_frac_color(t_data *data, t_color col, double angle,
 	int i, t_vec2 ab)
 {
 	int iter;
 	double d;
 
+	if (data->opt.palette > 5)
+		data->opt.palette = 1;	
 	iter = data->max_iteration;
-	col = hsv(360 * i / data->max_iteration, 0.7,  1, i * i / iter * iter);;
-	if (ab.x < 2.0 && ab.y <= 2.0)
+	if (data->opt.palette == 1)
 	{
-		col = hsv(230, 0, 1,0);
+		if (i >= iter)
+			col = hsv(230, 0, 1,0);
+		else
+			col = hsv(360 * i / data->max_iteration, 0.7,  1, 0);
+	}
+	if (data->opt.palette == 2)
+	{
+		if (i >= iter)
+			col = hsv(230, 0, 1,0);
+		else
+			col = hsv(360 - 360 * i / data->max_iteration, 0.3,  1, 0);	
+	}
+	if (data->opt.palette == 3)
+	{
+		if (i >= iter)
+			col = hsv(130, 0.4, 1,0);
+		else
+			col = hsv(angle, 1,  1, i /  iter);;
+	}
+	if (data->opt.palette == 4)
+	{
+		if (i >= iter)
+			col = hsv(360 *  data->opt.palette * i / iter, 1, 1, 0);
+		else
+			col.a = 255;;
+	}
+	if (data->opt.palette == 5)
+	{
+		if (i >= iter)
+			col = hsv(360 , 1, 0, 0);
+		else
+			col.a = 255;;
 	}
 	return (col);
 }
 
-static t_color	draw_mandelbrot(t_data *data, char *buf, int x, int y)
-{
-	int i;
-	t_vec2 xy;
-	t_vec2 ab[2];
-	long double xtemp;
-	double angle;
-
-	xy = inverse_transform(xy, data, x, y);
-	xy.x += data->frac_pos.x;
-	xy.y += data->frac_pos.y;
-	ab[0].x = 0;
-	ab[0].y = 0;
-	i = 0;
-	angle = 0;
-	while (ab[0].x <= 2 && ab[0].y <= 2 && i++ < data->max_iteration)
-	{
-		xtemp = ab[0].x * ab[0].x - ab[0].y * ab[0].y + xy.x;
-		ab[0].y = 2.0 * ab[0].x * ab[0].y + xy.y;
-		ab[0].x = xtemp;
-		angle = atan2(ab[1].x - ab[0].x, ab[1].y - ab[0].y) * 180 / M_PI;
-		ab[1].x = ab[0].x;
-		ab[1].y = ab[0].y;	
-	}
-	return (set_frac_color(data, color_init(data, 0), angle, i, ab[0]));
-}
 
 static void print_stats(t_data *data)
 {
@@ -97,17 +103,24 @@ void	loop_threads(t_data *data)
 	i = data->i;
 	pthread_mutex_unlock(&data->lock);
 	y = 0 + i * data->win_height / THREADS;
+	col = color_init(data, 0);
 	while (y < (i + 1) * data->win_height / THREADS)
 	{
 		x = 0;
 		while (x < data->win_width)
 		{
-			col = draw_mandelbrot(data, data->fractal_buf, x, y);
+			if (data->frac_num == 1 || data->frac_num == 0)
+				col = draw_mandelbrot(data, data->fractal_buf, x, y);
+			if (data->frac_num == 2)
+				col = draw_julia(data, data->fractal_buf, x, y);
+			if (data->frac_num == 3)
+				col = draw_burning_ship(data, data->fractal_buf, x, y);
 			set_image_pixel_color(data, data->fractal_buf, x + y * data->win_width, col);
 			x++;
 		}	
 		y++;
 	}
+	
 }
 
 void	draw_fractal(t_data *data)
@@ -117,10 +130,12 @@ void	draw_fractal(t_data *data)
 	int i;
 
 	print_stats(data);
-	col = color_init(data, 0);
-	//col.a = 255;
-	//image_size = data->win_width * data->win_height;
-	//fill_image(data, image_size * 4, data->fractal_buf, col);
+	if (data->opt.bg)
+	{
+		col.a = 255;
+		image_size = data->win_width * data->win_height;
+		fill_image(data, image_size * 4, data->fractal_buf, col);
+	}
 	data->i = 0;
 	i = 0;
 	if ((pthread_mutex_init(&data->lock, NULL) == -1))
@@ -134,8 +149,6 @@ void	draw_fractal(t_data *data)
 	}
 	i = 0;
 	while (i++ < THREADS)
-	{
 		pthread_join(data->threadid[i - 1], NULL);
-	}
 	pthread_mutex_destroy(&data->lock);
 }

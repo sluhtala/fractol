@@ -30,6 +30,8 @@ static void	input_action_manager(int key, t_data *data)
 		data->frac_pos.x =  data->grid_position.x * 4 / data->win_width - 2;
 		data->frac_pos.y = data->grid_position.y * 2 / data->win_height  - 1;
 		data->scale = 1;
+		if (data->frac_num == 2)
+			data->opt.screen_lock = 1;
 	}
 	if (key == 5)
 	{
@@ -46,12 +48,26 @@ int		mouse_manager(int button, int x, int y,  t_data *data)
 {
 	data->mouse.pos_x = x;
 	data->mouse.pos_y = y;	
+	if (data->frac_num == 0)
+	{
+		if (button == 1)
+			data->frac_num = ( 3 * x / (data->win_width)) + 1;
+		else
+			return (0);
+		if (data->frac_num == 2)
+			data->opt.screen_lock = 1;
+		data->opt.draw_fractal = 1;
+		renderer(data);
+		return (0);
+	}
 	if (button == 4 || button == 5)
 	{
 		ft_putnbr(button);
 		scale(button, data);
 		renderer(data);
 	}
+	if (button == 1)
+		data->opt.screen_lock = 0;
 	return (0);
 }
 
@@ -59,6 +75,8 @@ int		input_manager(int key, t_data *data)
 {
 	if (key == ESC_KEY || key == 12)
 		close_program(data);
+	if (data->frac_num == 0)
+		return (0);
 	if (key == UP_KEY || key == DOWN_KEY ||
 	key == RIGHT_KEY || key == LEFT_KEY)
 		input_action_manager(key, data);
@@ -70,15 +88,13 @@ int		input_manager(int key, t_data *data)
 			scale(key, data);
 		}
 		if (key == 43 && data->max_iteration - 20 > 0)
-			data->max_iteration -= 20;
+			data->max_iteration -= ITER;
 		if (key == 47)
-			data->max_iteration += 20;
+			data->max_iteration += ITER;
 		if (key == 8 || key == 5)
 			input_action_manager(key, data);
 		if (key == SPACE_KEY)
-		{
-			ft_putstr("Hello World\n");
-		}
+			data->opt.palette++;
 		data->opt.draw_fractal = 1;
 		renderer(data);
 	}

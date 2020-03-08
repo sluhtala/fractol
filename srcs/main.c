@@ -32,9 +32,12 @@
 
 static t_data initialize(t_data *data)
 {
+	data->opt.screen_lock = 0;
+	data->frac_num = 0;
+	data->opt.palette = 1;
 	data->opt.draw_fractal = 1;
 	data->opt.grid = 1;
-	data->opt.bg = 0;
+	data->opt.bg = 1;
 	data->mlx_ptr = mlx_init();
 	data->win_width =  WINWIDTH;
 	data->win_height = WINHEIGHT;
@@ -56,19 +59,40 @@ static t_data initialize(t_data *data)
 	return (*data);
 }
 
-int				main(void)
+
+static int	mouse_track(int x, int y, t_data *data)
+{
+	data->mouse.track_x = (long double)x;
+	data->mouse.track_y = (long double)y;
+	if (data->opt.screen_lock == 1)
+	{
+		data->opt.draw_fractal = 1;	
+		renderer(data);
+	}
+	return (0);
+}
+
+
+int				main(int argc, char **argv)
 {
 	t_data data;
 
+	if (argc > 2)
+		return (0);
 	data = initialize(&data);
+	if (argc == 2)
+		data.frac_num = ft_atoi(argv[1]);
+	if (data.frac_num > 3)
+		data.frac_num = 3;
+	if (data.frac_num == 2)
+		data.opt.screen_lock = 1;
 	create_background(&data);
 	draw_coord_grid(&data, data.grid_buf);
 	renderer(&data);
+	mlx_hook(data.mlx_win, 6, 0, &mouse_track, &data);
+	mlx_mouse_hook(data.mlx_win, &mouse_manager, &data);
 	mlx_hook(data.mlx_win, 2, 0, &input_manager, &data);
 	mlx_hook(data.mlx_win, 17, 0, &close_program, &data);
-//	mlx_hook(data.mlx_win, 6, 0, &mouse_manager_move, &data);
-//	mlx_hook(data.mlx_win, 4, 0, &mouse_manager_press, &data);
-	mlx_mouse_hook(data.mlx_win, &mouse_manager, &data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }

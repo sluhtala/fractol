@@ -77,25 +77,29 @@ static void		mouse_scale(int key, t_data *data)
 		data->scale;
 	tempy = (data->mouse.pos_y * 2 / data->win_height - 1) /
 		data->scale;
-	if (key == 4)
+	if (key == 4 && data->scale > ZOOM * 3)
+	{
+		data->max_iteration -= 1;
 		data->scale *= (1 - ZOOM);
+	}
 	if (key == 5)
+	{
+		data->max_iteration += 1;
 		data->scale *= (1 + ZOOM);
+	}
 	data->frac_pos.x += tempx - (data->mouse.pos_x * 4 /
 		data->win_width - 2) / data->scale;
 	data->frac_pos.y += tempy - (data->mouse.pos_y * 2 /
 		data->win_height - 1) / data->scale;
+	data->opt.draw_fractal = 1;
 }
 
 void	scale(int key, t_data *data)
 {
-	long double tempx;
-	long double tempy;
-
 	if (key == 4 || key == 5)
 	{
 		mouse_scale(key, data);
-		return ;	
+		return ;
 	}
 	data->frac_pos.x += (data->grid_position.x * 4 /
 		data->win_width - 2) / data->scale;
@@ -105,10 +109,12 @@ void	scale(int key, t_data *data)
 	data->grid_position.y = data->win_height / 2;
 	if (key == 18 && data->scale > ZOOM * 3)
 	{
+		data->max_iteration -= (1);
 		data->scale *= (1 - ZOOM);
 	}
 	if (key == 19)
 	{
+		data->max_iteration += (1);
 		data->scale *= (1 + ZOOM);
 	}
 }

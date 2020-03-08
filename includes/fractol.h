@@ -29,6 +29,7 @@
 # define WINHEIGHT 720 / 2
 # define THREADS 8
 # define ZOOM 0.2f
+# define ITER 20
 //200 = 1 min 9  sec
 //500 = 1 min 7  sec
 //10  = 1 min 17 sec
@@ -47,6 +48,8 @@ typedef struct	s_mouse
 {
 	long double pos_x;
 	long double pos_y;
+	long double track_x;
+	long double track_y;
 }				t_mouse;
 
 typedef struct	s_options
@@ -55,6 +58,8 @@ typedef struct	s_options
 	int bg;
 	int grid;
 	int frac_num;
+	int palette;
+	int screen_lock;
 }				t_options;
 
 typedef struct	s_color
@@ -88,6 +93,7 @@ typedef struct	s_data
 	int 	x;
 	int		y;
 	int		i;
+	int		frac_num;
 	t_mouse	mouse;
 	t_vec2	frac_pos;
 	pthread_mutex_t lock;
@@ -112,5 +118,10 @@ int		close_program(t_data *data);
 int		mouse_manager_move(int x, int y, t_data *data);
 int		mouse_manager_press(int button, t_data *data);
 int		mouse_manager(int button, int x, int y,  t_data *data);
+t_color	draw_mandelbrot(t_data *data, char *buf, int x, int y);
+t_color	draw_julia(t_data *data, char *buf, int x, int y);
+t_color set_frac_color(t_data *data, t_color col, double angle,int i, t_vec2 ab);
+t_vec2 inverse_transform(t_vec2 xy, t_data *data, double x, double y);
+t_color	draw_burning_ship(t_data *data, char *buf, int x, int y);
 
 #endif
