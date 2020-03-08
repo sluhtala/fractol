@@ -26,7 +26,7 @@ t_vec2 inverse_transform(t_vec2 xy, t_data *data, double x, double y)
 t_color set_frac_color(t_data *data, t_color col, double angle,
 	int i, t_vec2 ab)
 {
-	int iter;
+	double iter;
 	double d;
 
 	if (data->opt.palette > 5)
@@ -35,9 +35,10 @@ t_color set_frac_color(t_data *data, t_color col, double angle,
 	if (data->opt.palette == 1)
 	{
 		if (i >= iter)
-			col = hsv(230, 0, 1,0);
+			col = hsv(200, 0.5, 1,0);
 		else
-			col = hsv(360 * i / data->max_iteration, 0.7,  1, 0);
+			col = color_init(data, 0xff * i / iter);
+		//	col = hsv(20 * i, 0.8, (double)i / iter, 0);
 	}
 	if (data->opt.palette == 2)
 	{

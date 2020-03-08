@@ -50,7 +50,7 @@ int		mouse_manager(int button, int x, int y,  t_data *data)
 	data->mouse.pos_y = y;	
 	if (data->frac_num == 0)
 	{
-		if (button == 1)
+		if (button == 1 && y > 0)
 			data->frac_num = ( 3 * x / (data->win_width)) + 1;
 		else
 			return (0);
@@ -73,8 +73,14 @@ int		mouse_manager(int button, int x, int y,  t_data *data)
 
 int		input_manager(int key, t_data *data)
 {
-	if (key == ESC_KEY || key == 12)
+	if (key == ESC_KEY)
 		close_program(data);
+	if (key == 12)
+	{
+		data->frac_num = 0;
+		renderer(data);
+		return (0);
+	}
 	if (data->frac_num == 0)
 		return (0);
 	if (key == UP_KEY || key == DOWN_KEY ||
