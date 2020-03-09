@@ -6,7 +6,7 @@
 /*   By: sluhtala <sluhtala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 13:54:04 by sluhtala          #+#    #+#             */
-/*   Updated: 2020/03/09 18:14:35 by sluhtala         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:27:01 by sluhtala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@
 # define GRAY 0x888888
 # define DARKGRAY 0x222222
 # define WHITE 0xffffff
-# define WINWIDTH 1280 / 2
-# define WINHEIGHT 720 / 2
+# define WINWIDTH 1280
+# define WINHEIGHT 720
 # define THREADS 8
-# define ZOOM 0.2f
+# define ZOOM 0.25f
 # define ITER 20
 # include <math.h>
 # include "mlx.h"
@@ -138,11 +138,11 @@ int				close_program(t_data *data);
 int				mouse_manager_move(int x, int y, t_data *data);
 int				mouse_manager_press(int button, t_data *data);
 int				mouse_manager(int button, int x, int y, t_data *data);
-t_color			draw_mandelbrot(t_data *data, char *buf, int x, int y);
-t_color			draw_julia(t_data *data, char *buf, int x, int y);
+t_color			draw_mandelbrot(t_data *data, int x, int y);
+t_color			draw_julia(t_data *data, int x, int y);
 t_color			set_frac_color(t_data *data, t_fractal f);
 t_vec2			inverse_transform(t_vec2 xy, t_data *data, double x, double y);
-t_color			draw_burning_ship(t_data *data, char *buf, int x, int y);
+t_color			draw_burning_ship(t_data *data, int x, int y);
 int				mouse_release(int button, int x, int y, t_data *data);
 int				mouse_track(int x, int y, t_data *data);
 

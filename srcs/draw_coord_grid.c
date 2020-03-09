@@ -6,7 +6,7 @@
 /*   By: sluhtala <sluhtala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:16:48 by sluhtala          #+#    #+#             */
-/*   Updated: 2020/03/09 17:43:59 by sluhtala         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:25:00 by sluhtala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static void	vertical_helper(t_data *data, char *buffer, t_color col, int sd[4])
 static void	draw_vertical_tics(t_data *data, char *buffer, t_color col,
 		int sd[2])
 {
-	int pos;
 	int i;
 	int y;
 	int sdiy[4];
@@ -84,7 +83,6 @@ static void	horiz_helper(t_data *data, char *buffer, t_color col, int sd[4])
 static void	draw_horizontal_tics(t_data *data, char *buffer, t_color col,
 		int sd[2])
 {
-	int pos;
 	int i;
 	int y;
 	int sdiy[4];

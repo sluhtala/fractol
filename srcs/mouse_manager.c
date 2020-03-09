@@ -6,7 +6,7 @@
 /*   By: sluhtala <sluhtala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 16:44:08 by sluhtala          #+#    #+#             */
-/*   Updated: 2020/03/09 17:12:40 by sluhtala         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:30:09 by sluhtala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,10 @@ int			mouse_track(int x, int y, t_data *data)
 	return (0);
 }
 
-static int	mouse_helper(int button, int x, int y, t_data *data)
+static int	mouse_helper(int button, t_data *data)
 {
 	if (button == 4 || button == 5)
 	{
-		ft_putnbr(button);
 		scale(button, data);
 		renderer(data);
 	}
@@ -74,13 +73,15 @@ int			mouse_manager(int button, int x, int y, t_data *data)
 	}
 	if (button == 4 || button == 5 || button == 1)
 	{
-		mouse_helper(button, x, y, data);
+		mouse_helper(button, data);
 	}
 	return (0);
 }
 
 int			mouse_release(int button, int x, int y, t_data *data)
 {
+	x = 0;
+	y = 0;
 	if (button == 1)
 		data->mouse.down = 0;
 	return (0);

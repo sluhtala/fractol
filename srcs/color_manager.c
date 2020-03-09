@@ -6,7 +6,7 @@
 /*   By: sluhtala <sluhtala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 16:14:54 by sluhtala          #+#    #+#             */
-/*   Updated: 2020/03/09 17:50:51 by sluhtala         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:24:35 by sluhtala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,21 @@ static t_color	more_frac_colors(t_data *data, t_fractal f, t_color col)
 	if (data->opt.palette == 3)
 	{
 		if (f.i >= iter)
-			col = hsv(130, 0.4, 1, 0);
+			col = hsv(40, 1, 1, 0);
 		else
-			col = hsv(f.angle, 1, 1, f.i / iter);
+			col = hsv(210, 1, f.angle / 360, 0);
 	}
 	if (data->opt.palette == 4)
 	{
 		if (f.i >= iter)
-			col = hsv(360 * data->opt.palette * f.i / iter, 1, 1, 0);
+			col = hsv(0, 1, 0, 0);
 		else
 			col.a = 255;
 	}
 	if (data->opt.palette == 5)
 	{
 		if (f.i >= iter)
-			col = hsv(360, 1, 0, 0);
+			col = hsv(360, 0, 1, 0);
 		else
 			col.a = 255;
 	}
@@ -44,7 +44,6 @@ static t_color	more_frac_colors(t_data *data, t_fractal f, t_color col)
 t_color			set_frac_color(t_data *data, t_fractal f)
 {
 	double		iter;
-	double		d;
 	t_color		col;
 
 	if (data->opt.palette > 5)
@@ -55,14 +54,14 @@ t_color			set_frac_color(t_data *data, t_fractal f)
 		if (f.i >= iter)
 			col = hsv(200, 0.5, 1, 0);
 		else
-			col = color_init(data, 0xff * f.i / iter);
+			col = hsv(200, 1, f.i / iter, 0);
 	}
 	if (data->opt.palette == 2)
 	{
 		if (f.i >= iter)
 			col = hsv(230, 0, 1, 0);
 		else
-			col = hsv(360 - 360 * f.i / data->max_iteration, 0.3, 1, 0);
+			col = hsv(360 - 360 * f.i / iter, 0.8, 1, 0);
 	}
 	return (more_frac_colors(data, f, col));
 }

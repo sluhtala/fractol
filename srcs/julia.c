@@ -6,13 +6,13 @@
 /*   By: sluhtala <sluhtala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 16:56:09 by sluhtala          #+#    #+#             */
-/*   Updated: 2020/03/09 17:14:55 by sluhtala         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:26:06 by sluhtala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-t_color	draw_julia(t_data *data, char *buf, int x, int y)
+t_color	draw_julia(t_data *data, int x, int y)
 {
 	static t_vec2	xy;
 	long double		xtemp;
@@ -34,7 +34,7 @@ t_color	draw_julia(t_data *data, char *buf, int x, int y)
 		f.ab.y = 2.0 * f.ab.x * f.ab.y + xy.y;
 		f.ab.x = xtemp;
 	}
+	f.angle = atan2(f.xy.x - f.ab.x, f.xy.y - f.ab.y) * 180 / M_PI;
 	f.xy = xy;
-	f.angle = 45;
 	return (set_frac_color(data, f));
 }

@@ -6,7 +6,7 @@
 /*   By: sluhtala <sluhtala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 14:39:38 by sluhtala          #+#    #+#             */
-/*   Updated: 2020/03/09 17:07:58 by sluhtala         ###   ########.fr       */
+/*   Updated: 2020/03/09 18:28:12 by sluhtala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void		write_frac_names(t_data *data)
 	int ypos;
 
 	xpos = 5;
-	ypos = data->win_height - 20;
+	ypos = data->win_height - 25;
 	mlx_string_put(data->mlx_ptr, data->mlx_win, xpos, ypos, WHITE,
 		"Mandelbrot");
 	xpos += data->win_width / 3;

@@ -6,7 +6,7 @@
 /*   By: sluhtala <sluhtala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 14:14:19 by sluhtala          #+#    #+#             */
-/*   Updated: 2020/03/09 17:56:36 by sluhtala         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:28:21 by sluhtala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static void	print_stats(t_data *data)
 void		loop_threads(t_data *data)
 {
 	t_color	col;
-	int		offset;
 	int		i;
 	t_xy	xy;
 
@@ -54,11 +53,11 @@ void		loop_threads(t_data *data)
 		while (xy.x < data->win_width)
 		{
 			if (data->frac_num == 1 || data->frac_num == 0)
-				col = draw_mandelbrot(data, data->fractal_buf, xy.x, xy.y);
+				col = draw_mandelbrot(data, xy.x, xy.y);
 			if (data->frac_num == 2)
-				col = draw_julia(data, data->fractal_buf, xy.x, xy.y);
+				col = draw_julia(data, xy.x, xy.y);
 			if (data->frac_num == 3)
-				col = draw_burning_ship(data, data->fractal_buf, xy.x, xy.y);
+				col = draw_burning_ship(data, xy.x, xy.y);
 			set_image_pixel_color(data, data->fractal_buf, xy.x + xy.y *
 					data->win_width, col);
 			xy.x++;

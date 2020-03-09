@@ -6,7 +6,7 @@
 /*   By: sluhtala <sluhtala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 16:56:00 by sluhtala          #+#    #+#             */
-/*   Updated: 2020/03/09 18:06:55 by sluhtala         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:26:22 by sluhtala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static long double	ldabs(long double num)
 		return (num);
 }
 
-t_color				draw_burning_ship(t_data *data, char *buf, int x, int y)
+t_color				draw_burning_ship(t_data *data, int x, int y)
 {
 	long double xtemp;
 	t_fractal	f;
@@ -37,9 +37,7 @@ t_color				draw_burning_ship(t_data *data, char *buf, int x, int y)
 		xtemp = f.ab.x * f.ab.x - f.ab.y * f.ab.y + f.xy.x;
 		f.ab.y = ldabs((2.0 * f.ab.x * f.ab.y + f.xy.y));
 		f.ab.x = ldabs(xtemp);
-		f.angle = atan2(f.temp.x - f.ab.x, f.temp.y - f.ab.y) * 180 / M_PI;
-		f.temp.x = f.ab.x;
-		f.temp.y = f.ab.y;
 	}
+	f.angle = atan2(f.xy.x - f.ab.x, f.xy.y - f.ab.y) * 180 / M_PI;
 	return (set_frac_color(data, f));
 }
