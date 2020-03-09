@@ -1,10 +1,10 @@
 NAME = fractol
 
 SRCS = srcs/main.c srcs/error_manager.c srcs/create_background.c \
-	srcs/color_init.c srcs/image_manager.c srcs/input_manager.c \
+	srcs/color_manager.c srcs/image_manager.c srcs/input_manager.c \
 	srcs/draw_coord_grid.c srcs/renderer.c srcs/draw_fractal.c \
 	srcs/hsv.c srcs/input_navigate.c srcs/mandelbrot.c srcs/julia.c \
-	srcs/burning_ship.c
+	srcs/burning_ship.c srcs/mouse_manager.c
 
 OFILES = srcs/main.o
 
@@ -24,12 +24,13 @@ cata:
 	@echo $(NAME) created
 
 clean:
-	rm -f $(OFILES)
+	@rm -f $(OFILES)
 	@make clean -C libft
 
 fclean: clean
-	rm -f $(NAME)
-	rm -rf $(NAME).dSYM
+	@echo cleaning...
+	@rm -f $(NAME)
+	@rm -rf $(NAME).dSYM
 	@make fclean -C libft
 
 re: fclean all

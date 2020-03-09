@@ -1,29 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mandelbrot.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sluhtala <sluhtala@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/09 16:55:53 by sluhtala          #+#    #+#             */
+/*   Updated: 2020/03/09 17:16:04 by sluhtala         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fractol.h"
 
 t_color	draw_mandelbrot(t_data *data, char *buf, int x, int y)
 {
-	int i;
-	t_vec2 xy;
-	t_vec2 ab[2];
-	long double xtemp;
-	double angle;
+	long double	xtemp;
+	t_fractal	f;
 
-	xy = inverse_transform(xy, data, x, y);
-	xy.x += data->frac_pos.x;
-	xy.y += data->frac_pos.y;
-	ab[0].x = 0;
-	ab[0].y = 0;
-	i = 0;
-	angle = 0;
-	while (ab[0].x <= 2 && ab[0].y <= 2 && i++ < data->max_iteration)
+	f.xy = inverse_transform(f.xy, data, x, y);
+	f.xy.x += data->frac_pos.x;
+	f.xy.y += data->frac_pos.y;
+	f.ab.x = 0;
+	f.ab.y = 0;
+	f.i = 0;
+	f.angle = 0;
+	while (f.ab.x <= 2 && f.ab.y <= 2 && f.i++ < data->max_iteration)
 	{
-		xtemp = ab[0].x * ab[0].x - ab[0].y * ab[0].y + xy.x;
-		ab[0].y = 2.0 * ab[0].x * ab[0].y + xy.y;
-		ab[0].x = xtemp;
-		angle = atan2(ab[1].x - ab[0].x, ab[1].y - ab[0].y) * 180 / M_PI;
-		ab[1].x = ab[0].x;
-		ab[1].y = ab[0].y;	
+		xtemp = f.ab.x * f.ab.x - f.ab.y * f.ab.y + f.xy.x;
+		f.ab.y = 2.0 * f.ab.x * f.ab.y + f.xy.y;
+		f.ab.x = xtemp;
+		f.angle = atan2(f.temp.x - f.ab.x, f.temp.y - f.ab.y) * 180 / M_PI;
+		f.temp.x = f.ab.x;
+		f.temp.y = f.ab.y;
 	}
-	return (set_frac_color(data, color_init(data, 0), angle, i, ab[0]));
+	return (set_frac_color(data, f));
 }

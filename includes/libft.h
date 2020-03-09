@@ -6,7 +6,7 @@
 /*   By: sluhtala <sluhtala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 16:09:49 by sluhtala          #+#    #+#             */
-/*   Updated: 2020/02/12 15:40:05 by sluhtala         ###   ########.fr       */
+/*   Updated: 2020/03/09 14:28:12 by sluhtala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "libft.h"
+# include "../libft/ft_printf.h"
 
 typedef struct	s_list
 {
@@ -92,7 +92,5 @@ void			ft_printlst(t_list *lst);
 char			*ft_strtolower(const char *str);
 char			*ft_strtoupper(const char *str);
 void			*ft_realloc(void *s, size_t oldsize, size_t newsize);
-int				get_next_line(const int fd, char **line);
-char			**ft_split(char const *s);
 
 #endif

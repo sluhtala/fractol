@@ -6,7 +6,7 @@
 /*   By: sluhtala <sluhtala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:32:29 by sluhtala          #+#    #+#             */
-/*   Updated: 2020/03/06 19:43:03 by sluhtala         ###   ########.fr       */
+/*   Updated: 2020/03/09 17:06:00 by sluhtala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static int	move_leftright(int key, t_data *data, double amount)
 	{
 		if (data->grid_position.x < data->win_width && data->opt.grid == 1)
 			data->grid_position.x += amount;
-		else if (data->grid_position.x >= data->win_width || data->opt.grid == 0)
+		else if (data->grid_position.x >= data->win_width ||
+			data->opt.grid == 0)
 		{
 			data->frac_pos.x += (amount * 4 / data->win_width / data->scale);
 			i = 1;
@@ -40,7 +41,7 @@ static int	move_leftright(int key, t_data *data, double amount)
 	return (i);
 }
 
-void move_updown(int key, t_data *data, double amount, int f)
+void		move_updown(int key, t_data *data, double amount, int f)
 {
 	if (key == UP_KEY)
 	{
@@ -56,7 +57,8 @@ void move_updown(int key, t_data *data, double amount, int f)
 	{
 		if (data->grid_position.y < data->win_height && data->opt.grid == 1)
 			data->grid_position.y += amount;
-		else if (data->grid_position.y >= data->win_height || data->opt.grid == 0)
+		else if (data->grid_position.y >= data->win_height ||
+			data->opt.grid == 0)
 		{
 			data->frac_pos.y += (amount * 2 / data->win_height / data->scale);
 			f = 1;
@@ -68,7 +70,7 @@ void move_updown(int key, t_data *data, double amount, int f)
 	renderer(data);
 }
 
-static void		mouse_scale(int key, t_data *data)
+static void	mouse_scale(int key, t_data *data)
 {
 	long double tempx;
 	long double tempy;
@@ -94,7 +96,7 @@ static void		mouse_scale(int key, t_data *data)
 	data->opt.draw_fractal = 1;
 }
 
-void	scale(int key, t_data *data)
+void		scale(int key, t_data *data)
 {
 	if (key == 4 || key == 5)
 	{

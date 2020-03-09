@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hsv.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sluhtala <sluhtala@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/09 17:46:21 by sluhtala          #+#    #+#             */
+/*   Updated: 2020/03/09 17:46:23 by sluhtala         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
-static t_color more_cases(double h, double s, double v, int i)
+static t_color	more_cases(double h, double s, double v, int i)
 {
 	t_color col;
 
@@ -25,7 +37,7 @@ static t_color more_cases(double h, double s, double v, int i)
 	return (col);
 }
 
-static t_color cases(double h, double s, double v, int i)
+static t_color	cases(double h, double s, double v, int i)
 {
 	t_color col;
 
@@ -34,12 +46,11 @@ static t_color cases(double h, double s, double v, int i)
 		col.r = v;
 		col.g = v * (1.0 - (s * (1.0 - (h - i))));
 		col.b = v * (1.0 - s);
-
 	}
 	else if (i == 1)
 	{
 		col.r = v * (1.0 - (s * (h - i)));
-		col.g =	v; 
+		col.g = v;
 		col.b = v * (1.0 - s);
 	}
 	else if (i == 2)
@@ -53,15 +64,15 @@ static t_color cases(double h, double s, double v, int i)
 	return (col);
 }
 
-t_color		hsv(double hue, double saturation, double value, double alpha)
+t_color			hsv(double hue, double saturation, double value, double alpha)
 {
-	t_color col;
-	int i;
+	t_color	col;
+	int		i;
 
 	col.a = alpha * 255;
 	if (saturation == 0)
 	{
-		col.r = value; 
+		col.r = value;
 		col.g = value;
 		col.b = value;
 	}

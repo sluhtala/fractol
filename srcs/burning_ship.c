@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   burning_ship.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sluhtala <sluhtala@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/09 16:56:00 by sluhtala          #+#    #+#             */
+/*   Updated: 2020/03/09 18:06:55 by sluhtala         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fractol.h"
 
-static long double ldabs(long double num)
+static long double	ldabs(long double num)
 {
 	if (num < 0)
 		return (num * -1);
@@ -9,29 +20,26 @@ static long double ldabs(long double num)
 		return (num);
 }
 
-t_color	draw_burning_ship(t_data *data, char *buf, int x, int y)
+t_color				draw_burning_ship(t_data *data, char *buf, int x, int y)
 {
-	int i;
-	t_vec2 xy;
-	t_vec2 ab[2];
 	long double xtemp;
-	double angle;
+	t_fractal	f;
 
-	xy = inverse_transform(xy, data, x, y);
-	xy.x += data->frac_pos.x;
-	xy.y += data->frac_pos.y;
-	ab[0].x = xy.x;
-	ab[0].y = xy.y;
-	i = 0;
-	angle = 0;
-	while (ab[0].x * ab[0].x + ab[0].y * ab[0].y < 4 && i++ < data->max_iteration)
+	f.xy = inverse_transform(f.xy, data, x, y);
+	f.xy.x += data->frac_pos.x;
+	f.xy.y += data->frac_pos.y;
+	f.ab.x = f.xy.x;
+	f.ab.y = f.xy.y;
+	f.i = 0;
+	f.angle = 0;
+	while (f.ab.x * f.ab.x + f.ab.y * f.ab.y < 4 && f.i++ < data->max_iteration)
 	{
-		xtemp = ab[0].x * ab[0].x - ab[0].y * ab[0].y + xy.x;
-		ab[0].y = ldabs((2.0 * ab[0].x * ab[0].y + xy.y));
-		ab[0].x = ldabs(xtemp);
-		angle = atan2(ab[1].x - ab[0].x, ab[1].y - ab[0].y) * 180 / M_PI;
-		ab[1].x = ab[0].x;
-		ab[1].y = ab[0].y;	
+		xtemp = f.ab.x * f.ab.x - f.ab.y * f.ab.y + f.xy.x;
+		f.ab.y = ldabs((2.0 * f.ab.x * f.ab.y + f.xy.y));
+		f.ab.x = ldabs(xtemp);
+		f.angle = atan2(f.temp.x - f.ab.x, f.temp.y - f.ab.y) * 180 / M_PI;
+		f.temp.x = f.ab.x;
+		f.temp.y = f.ab.y;
 	}
-	return (set_frac_color(data, color_init(data, 0), angle, i, ab[0]));
+	return (set_frac_color(data, f));
 }

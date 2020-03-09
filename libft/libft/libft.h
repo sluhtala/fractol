@@ -6,7 +6,7 @@
 /*   By: sluhtala <sluhtala@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 16:09:49 by sluhtala          #+#    #+#             */
-/*   Updated: 2020/03/09 14:23:35 by sluhtala         ###   ########.fr       */
+/*   Updated: 2020/01/20 13:35:50 by sluhtala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "ft_printf.h"
 
 typedef struct	s_list
 {
